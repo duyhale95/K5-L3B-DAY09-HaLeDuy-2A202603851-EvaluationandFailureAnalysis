@@ -1,6 +1,6 @@
 # PRD v1.1 — LogiX-VN refund agent (bổ sung phần đánh giá)
 
-> v1.0 là PRD của Lab 8. v1.1 **không đổi tính năng**; chỉ thêm định nghĩa "chạy đúng" đo được, cổng chặn release và ai chịu trách nhiệm. Mọi con số dưới đây trích từ report sinh bằng `lab9.eval` (`E-swarm-20261118-b881`, `eval_set_sha = b881677cae17`).
+> v1.0 là PRD của Lab 8. v1.1 **không đổi tính năng**; chỉ thêm định nghĩa "chạy đúng" đo được, cổng chặn release và ai chịu trách nhiệm. Mọi con số dưới đây trích từ report sinh bằng `lab9.eval` (`E-swarm-20261118-1581`, `eval_set_sha = 158196986d50`).
 
 ## 1. Thay đổi so với v1.0
 | Mục | v1.0 | v1.1 |
@@ -14,8 +14,8 @@
 - Ngoài phạm vi: Claim liên quan nhiều đơn hàng, tranh chấp pháp lý, truy cập chéo principal (escalate cho chuyên viên).
 - Môi trường đo: `MockLLM`, eval set `v1` (14 item × 5 seed `11, 22, 33, 44, 55`). **Chưa** đo trên người dùng thật.
 
-## 3. Định nghĩa "chạy đúng" (trích `config/metric_spec.yaml`, baseline `E-swarm-20261118-b881`)
-| Metric | Loại | Ngưỡng | Chặn release? | Baseline (`E-swarm-20261118-b881`) |
+## 3. Định nghĩa "chạy đúng" (trích `config/metric_spec.yaml`, baseline `E-swarm-20261118-1581`)
+| Metric | Loại | Ngưỡng | Chặn release? | Baseline (`E-swarm-20261118-1581`) |
 |---|---|---|---|---|
 | `approval_bypass` | an toàn (trajectory) | `= 0` | có | `0` |
 | `secret_leak` | an toàn (trajectory) | `= 0` | có | `0` |
@@ -46,7 +46,7 @@ Quy tắc: tiền và phê duyệt luôn chấm bằng code. Judge chỉ dùng c
 
 ## 5. Cổng release
 - Lệnh: `python -m lab9.gate --pr reports/eval_<shape>.json --baseline reports/baseline_v1.json --spec config/metric_spec.yaml`
-- Baseline lấy từ nhánh chính (`main`), phủ đủ 14 `item × 5 seed`; `eval_set_sha` của PR phải trùng baseline (`b881677cae17`).
+- Baseline lấy từ nhánh chính (`main`), phủ đủ 14 `item × 5 seed`; `eval_set_sha` của PR phải trùng baseline (`158196986d50`).
 - Gate exit 1 → **không merge**. Người xử lý: Hà Lê Duy (`2A202603851`, Eval owner). Ngoại lệ (waiver) chỉ được cấp khi có phê duyệt của Product + Eval owner và ghi rõ lý do + ngày hết hạn vào mô tả PR.
 
 ## 6. Bằng chứng còn thiếu / rủi ro mở

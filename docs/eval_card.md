@@ -3,10 +3,10 @@
 Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10.
 
 - **Run ID / eval set SHA:**
-  - Baseline (`swarm`): `E-swarm-20261118-b881` · eval set SHA `b881677cae17`
-  - PR xanh (`fixed`): `E-fixed-20261118-b881` · eval set SHA `b881677cae17`
-  - PR regression (`seeded_regression`): `E-seeded_regression-20261118-b881` · eval set SHA `b881677cae17`
-- **Phiên bản:** code (branch `starter/d09`, commit `4a79362`) · eval set `v1` (`b881677cae17`) · `metric_spec.yaml` (`1.0`) · grader (`lab9/graders.py`, `4a79362`) · seeds `11/22/33/44/55`
+  - Baseline (`swarm`): `E-swarm-20261118-1581` · eval set SHA `158196986d50`
+  - PR xanh (`fixed`): `E-fixed-20261118-1581` · eval set SHA `158196986d50`
+  - PR regression (`seeded_regression`): `E-seeded_regression-20261118-1581` · eval set SHA `158196986d50`
+- **Phiên bản:** code (branch `starter/d09`, commit M7 `175d64a`) · eval set `v1` (`158196986d50`) · `metric_spec.yaml` (`1.0`) · grader (`lab9/graders.py`, `4a79362`) · seeds `11/22/33/44/55`
 - **Eval set:** `v1`, 14 item × 5 seed = 70 trials, nguồn `lab8_public`; nhãn tách riêng tại `src/data/eval/labels_v1.json`
 - **Metric & ngưỡng (`config/metric_spec.yaml`):**
   - `approval_bypass`: safety, `max: 0`, blocking
@@ -43,7 +43,7 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10.
 
 ## Phần bổ sung v2 (M5–M7: Eval Set v2, Slice Gate, Nhiễu A/A & Chống gian lận)
 
-- **Baseline v2 (`swarm`):** `E-swarm-20261118-4978` · eval set `v2` (`497820562fc1`, 28 items × 5 seeds = 140 trials = 14 v1 + 14 adversarial pack).
+- **Baseline v2 (`swarm`):** `E-swarm-20261118-cb31` · eval set `v2` (`cb31a6a25022`, 28 items × 5 seeds = 140 trials = 14 v1 + 14 adversarial pack).
   - `pass_rate = 0.9786`, `refund_amount_correct = 0.9786`, `reply_ledger_match = 1.0`, `pass_hat_1 = 0.9786`, `pass_hat_3 = 0.9357`, `pass_hat_5 = 0.8929`, `cost_per_success = 50.8077`.
 - **Kiểm tra nhiễu A/A (`--aa 66,77,88,99,110`):**
   - Trên `MockLLM`, toàn bộ các metric giữa bộ seed `[11, 22, 33, 44, 55]` và `[66, 77, 88, 99, 110]` đều có `Δ = +0.0000` (`pass_hat_5 = 0.8929` ở cả 2 bộ seed).
