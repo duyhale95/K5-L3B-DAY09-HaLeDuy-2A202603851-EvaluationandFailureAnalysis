@@ -38,3 +38,19 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10.
 - **Phạm vi pilot:** Claim hoàn phí trễ giao/hỏng hàng của LogiX-VN trên 1 đơn hàng thuộc phạm vi 1 principal, dùng bảng giá hiện hành và approval có sẵn.
 - **Giới hạn / bằng chứng còn thiếu:** MockLLM (không phản ánh biến thiên của LLM thật), cỡ mẫu nhỏ (14 item → CI paired bootstrap rộng, chỉ phát hiện hồi quy lớn), judge replay trên CSV công khai (chưa có tập held-out nhãn người mới); chưa đo trên người dùng thật.
 - **Khi nào tăng eval-set version:** Khi bổ sung item mới từ trace case thực tế hoặc thêm adversarial pack (như lên `v2`), bắt buộc tăng `eval_set_version` và sinh lại baseline.
+
+---
+
+## Phần bổ sung v2 (M5–M7: Eval Set v2, Slice Gate, Nhiễu A/A & Chống gian lận)
+
+- **Baseline v2 (`swarm`):** `E-swarm-20261118-4978` · eval set `v2` (`497820562fc1`, 28 items × 5 seeds = 140 trials = 14 v1 + 14 adversarial pack).
+  - `pass_rate = 0.9786`, `refund_amount_correct = 0.9786`, `reply_ledger_match = 1.0`, `pass_hat_1 = 0.9786`, `pass_hat_3 = 0.9357`, `pass_hat_5 = 0.8929`, `cost_per_success = 50.8077`.
+- **Kiểm tra nhiễu A/A (`--aa 66,77,88,99,110`):**
+  - Trên `MockLLM`, toàn bộ các metric giữa bộ seed `[11, 22, 33, 44, 55]` và `[66, 77, 88, 99, 110]` đều có `Δ = +0.0000` (`pass_hat_5 = 0.8929` ở cả 2 bộ seed).
+  - Với LLM thật (có biến thiên nhiệt độ/mẫu ngẫu nhiên), dải nhiễu A/A sẽ `> 0`; ngưỡng chặn phải đặt **ngoài dải nhiễu A/A** để tránh báo nhầm ngẫu nhiên trên PR trung thực. Chọn ngưỡng `pass_hat_5 >= 0.80` (`blocking: true`, `no_significant_drop: true`) — đủ chặt để chặn `flaky_regression` (lỗi làm tròn 1/5 seed) nhưng có biên an toàn dưới `0.8929`.
+- **Slice gate (`config/metric_spec_v2.yaml`):**
+  - `money_movement` (`min: 0.85`, `no_significant_drop: true`, `blocking: true`): bắt `slice_regression` (lỗi cộng điều khoản `sum_parts` ở seed lẻ trên các claim hoàn tiền; trung bình toàn bộ `pass_rate = 0.9357` vẫn trên sàn `0.85` và CI chạm `0`).
+  - `adversarial` (`min: 0.85`, `no_significant_drop: true`, `blocking: true`): bảo vệ toàn bộ 14 item tấn công (`ticket_over_db`, `stale_policy`, `clause_sum`, `double_deduct`, `sibling_refund`, `denied_ignored`, `reply_ledger_mismatch`, `cross_principal`).
+  - `denial` (`min: 0.90`, `no_significant_drop: true`, `blocking: true`): bảo vệ nhóm claim từ chối chi tiền.
+- **Giới hạn cỡ mẫu (Sample-size limit):** Một lỗi hiếm chỉ xuất hiện ở `1/3` seed (`rare`) **không** thể phát hiện ổn định khi chỉ chạy với 5 seed (xác suất không gặp hoặc gặp quá ít làm CI rộng). Đây là giới hạn thống kê của cỡ mẫu 5 seed — cần tăng số seed hoặc bổ sung test xác định thay vì hạ ngưỡng để "ép" gate bắt được.
+
