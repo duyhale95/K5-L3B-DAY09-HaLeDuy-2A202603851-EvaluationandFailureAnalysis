@@ -1,6 +1,6 @@
 # Eval card — LogiX-VN refund agent
 
-Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10.
+Các kết quả dưới đây được sinh lại trên nhánh starter/d09 của fork nộp bài ngày 18/11/2026. Xem [các report đã commit](../src/reports/).
 
 - **Run ID / eval set SHA:**
   - Baseline (`swarm`): `E-swarm-20261118-1581` · eval set SHA `158196986d50`
